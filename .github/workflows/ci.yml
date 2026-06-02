@@ -21,11 +21,10 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Install MLflow
+      - name: Install Dependencies
         run: |
-          pip install mlflow==2.19.0
+          pip install -r MLProject/requirements.txt
 
-      - name: Run MLflow Project
+      - name: Run Training
         run: |
-          cd MLProject
-          mlflow run .
+          python MLProject/modelling.py
