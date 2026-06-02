@@ -27,4 +27,5 @@ jobs:
 
       - name: Run Training
         run: |
-          python MLProject/modelling.py
+          cd MLProject
+          python modelling.py
