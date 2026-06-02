@@ -15,8 +15,6 @@ from sklearn.metrics import (
 # MLflow Configuration
 # =========================
 
-mlflow.set_tracking_uri("http://127.0.0.1:5000")
-
 mlflow.set_experiment(
     "Telco Customer Churn"
 )
@@ -112,5 +110,3 @@ with mlflow.start_run():
     print(f"F1 Score : {f1:.4f}")
 
 print("\nTraining selesai.")
-print("Cek MLflow UI di:")
-print("http://127.0.0.1:5000")
