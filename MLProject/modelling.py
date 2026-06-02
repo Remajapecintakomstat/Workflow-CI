@@ -28,7 +28,7 @@ mlflow.sklearn.autolog()
 # =========================
 
 df = pd.read_csv(
-    r"C:\Users\hp\Downloads\Telco Customer Churn_preprocessing.csv"
+    r"Telco Customer Churn_preprocessing.csv"
 )
 
 print("Dataset Shape:", df.shape)
