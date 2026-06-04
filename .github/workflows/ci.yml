@@ -6,66 +6,48 @@ on:
       - main
 
 jobs:
-
   train-model:
-
     runs-on: ubuntu-latest
 
     steps:
-
-      - name: Run actions/checkout@v3
+      - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Set up Python 3.12.7
+      - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.12"
 
-      - name: Check Env
+      - name: Check Environment
         run: |
           python --version
           pip --version
 
-      - name: Install dependencies
+      - name: Install Dependencies
         run: |
           pip install -r MLProject/requirements.txt
-
-      - name: Set MLflow Tracking URI
-        run: |
-          echo "Using local MLflow tracking"
-
-      - name: Run mlflow project
-        run: |
-          cd MLProject
-          python modelling.py
-
-      - name: Get latest MLflow run_id
-        run: |
-          echo "Training completed"
-
-      - name: Install Python dependencies
-        run: |
           pip install mlflow
 
-      - name: Upload to GitHub
+      - name: Run MLflow Project
+        run: |
+          cd MLProject
+          mlflow run .
+
+      - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:
           name: model-artifacts-${{ github.run_number }}
           path: MLProject
 
-      - name: Build Docker Model
+      - name: Build Docker Image
         run: |
           docker build -t amadeisgenta/telco-churn:latest ./MLProject
 
-      - name: Log in to Docker Hub
+      - name: Login to Docker Hub
         uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
-
-      - name: Tag Docker Image
-        run: |
-          docker tag amadeisgenta/telco-churn:latest amadeisgenta/telco-churn:latest
 
       - name: Push Docker Image
         run: |
